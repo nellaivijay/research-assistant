@@ -744,6 +744,25 @@ def create_research_assistant():
         # Header
         gr.Markdown("# 📚 Enhanced Research Assistant - AI Model Selection")
         gr.Markdown("Advanced research companion with custom AI model selection, multi-source recommendations, and workflow management")
+
+        gr.Markdown("""
+        ### 🆔 Quick Start Guide
+
+        **How to Get Paper IDs:**
+        - From arXiv URL: Use the last part (e.g., `1706.03762` from `https://arxiv.org/abs/1706.03762`)
+        - From recommendations: Use the "Extract Paper ID" button in Reading List tab
+        - From Paper JSON: Check the `externalIds.ArXiv` field in the Paper JSON output
+
+        **How to Get User ID:**
+        - Create your own: Use any identifier (email, username, or unique string)
+        - Keep it consistent: Use the same ID across Reading List and Notes tabs
+        - Privacy: Your data is stored locally and organized by your user ID
+
+        **How to Get Paper JSON:**
+        - Automatic: After getting recommendations, the Paper JSON field shows complete paper data
+        - Copy & Paste: Use the JSON in Reading List and other features
+        - Contains: Title, year, abstract, citations, URL, paper IDs, and more
+        """)
         
         with gr.Tabs():
             # ==================== PAPER RECOMMENDATIONS TAB ====================
@@ -766,27 +785,29 @@ def create_research_assistant():
                 with gr.Row():
                     recommendations_output = gr.Markdown()
                     analysis_output = gr.Markdown()
-                
+
+                paper_json_output = gr.Code(label="Paper JSON (Click to Copy)", language="json", lines=10)
+
                 def get_recommendations(paper_id, sources):
                     if not paper_id:
-                        return "Please enter a paper ID or URL", ""
-                    
+                        return "Please enter a paper ID or URL", "", ""
+
                     # Extract arXiv ID from URL if needed
                     arxiv_id = paper_id.split("/")[-1] if "/" in paper_id else paper_id
-                    
+
                     # Get recommendations
                     source_map = {
                         "Semantic Scholar": "semantic_scholar",
                         "arXiv": "arxiv",
                         "Citations": "semantic_scholar"
                     }
-                    
+
                     selected_sources = [source_map[s] for s in sources if s in source_map]
                     results = recommender.get_recommendations(arxiv_id, selected_sources)
-                    
+
                     # Format recommendations
                     output = "## Recommended Papers\n\n"
-                    
+
                     for source, papers in results.items():
                         if papers:
                             output += f"### From {source.replace('_', ' ').title()}\n\n"
@@ -795,43 +816,81 @@ def create_research_assistant():
                                 output += f"- Citations: {paper['citationCount']}\n"
                                 output += f"- [View Paper]({paper['url']})\n"
                                 output += f"- Abstract: {paper['abstract'][:200]}...\n\n"
-                    
+
                     # Analyze the input paper
+                    paper_json = ""
                     if results.get("semantic_scholar"):
                         input_paper = results["semantic_scholar"][0] if results["semantic_scholar"] else {}
                         analysis = analyzer.analyze_paper(input_paper)
-                        
+
                         analysis_text = "## Paper Analysis\n\n"
                         analysis_text += f"- **Impact Score**: {analysis['impact_score']}\n"
                         analysis_text += f"- **Readability**: {analysis['readability_score']}\n"
                         analysis_text += f"- **Citation Velocity**: {analysis['citation_velocity']}\n"
                         analysis_text += f"- **Topics**: {', '.join(analysis['related_topics'])}\n"
-                        
+
                         if analysis['key_contributions']:
                             analysis_text += "\n### Key Contributions\n"
                             for contribution in analysis['key_contributions']:
                                 analysis_text += f"- {contribution}\n"
+
+                        # Generate paper JSON for the user
+                        paper_json = json.dumps(input_paper, indent=2)
                     else:
                         analysis_text = "Analysis not available for this paper."
-                    
-                    return output, analysis_text
+
+                    return output, analysis_text, paper_json
                 
-                recommend_btn.click(get_recommendations, inputs=[paper_input, source_selector], outputs=[recommendations_output, analysis_output])
+                recommend_btn.click(get_recommendations, inputs=[paper_input, source_selector], outputs=[recommendations_output, analysis_output, paper_json_output])
             
             # ==================== READING LIST TAB ====================
             with gr.Tab("📖 Reading List"):
                 gr.Markdown("## Personal Reading List Management")
-                
-                user_id = gr.Textbox(label="User ID", placeholder="Enter your identifier")
-                
+
+                gr.Markdown("""
+                **User ID**: Enter any identifier to create your personal reading list.
+                - Use your email, username, or any unique identifier
+                - Your data is stored locally and private
+                - Same user ID will load your previous data
+                """)
+
+                user_id = gr.Textbox(label="User ID", placeholder="Enter your identifier (e.g., email, username)")
+
                 with gr.Row():
                     add_paper_btn = gr.Button("Add to Reading List", variant="primary")
                     view_list_btn = gr.Button("View Reading List", variant="secondary")
-                
-                paper_to_add = gr.Textbox(label="Paper Details (JSON)", placeholder='{"title": "Paper Title", "year": "2023", "url": "..."}')
-                
+
+                gr.Markdown("**Paper Details**: Paste the paper JSON from the recommendations above, or enter manually.")
+                paper_to_add = gr.Textbox(label="Paper Details (JSON)", placeholder='{"title": "Paper Title", "year": "2023", "url": "..."}', lines=5)
+
+                with gr.Row():
+                    extract_paper_id_btn = gr.Button("📋 Extract Paper ID from JSON", variant="secondary")
+                    paper_id_display = gr.Textbox(label="Extracted Paper ID", interactive=False)
+
                 reading_list_output = gr.Markdown()
-                
+
+                def extract_paper_id_from_json(paper_json):
+                    """Extract paper ID from JSON"""
+                    if not paper_json:
+                        return "Please paste paper JSON first."
+
+                    try:
+                        paper = json.loads(paper_json)
+                        # Try to get paper ID from various fields
+                        paper_id = (
+                            paper.get("externalIds", {}).get("ArXiv", "") or
+                            paper.get("paperId", "") or
+                            paper.get("id", "") or
+                            paper.get("url", "").split("/")[-1] if paper.get("url") else ""
+                        )
+
+                        if paper_id:
+                            return f"Extracted Paper ID: {paper_id}"
+                        else:
+                            return "No paper ID found in JSON. Available fields: " + ", ".join(paper.keys())
+                    except json.JSONDecodeError:
+                        return "Invalid JSON format. Please provide valid JSON."
+
                 def add_to_reading_list(user_id, paper_json):
                     if not user_id or not paper_json:
                         return "Please provide user ID and paper details."
@@ -876,13 +935,28 @@ def create_research_assistant():
                 
                 add_paper_btn.click(add_to_reading_list, inputs=[user_id, paper_to_add], outputs=[reading_list_output])
                 view_list_btn.click(view_reading_list, inputs=[user_id], outputs=[reading_list_output])
+                extract_paper_id_btn.click(extract_paper_id_from_json, inputs=[paper_to_add], outputs=[paper_id_display])
             
             # ==================== NOTES & ANNOTATIONS TAB ====================
             with gr.Tab("📝 Notes & Annotations"):
                 gr.Markdown("## Personal Notes and Annotations")
-                
-                note_user_id = gr.Textbox(label="User ID", placeholder="Enter your identifier")
-                note_paper_id = gr.Textbox(label="Paper ID", placeholder="Enter paper ID")
+
+                gr.Markdown("""
+                **User ID**: Enter the same identifier you used in the Reading List tab.
+                - Your notes are linked to your user ID
+                - Notes are stored privately and locally
+                """)
+
+                note_user_id = gr.Textbox(label="User ID", placeholder="Enter your identifier (same as Reading List)")
+
+                gr.Markdown("""
+                **Paper ID**: Enter the paper ID you want to add notes for.
+                - You can extract paper IDs from the Paper JSON in the recommendations tab
+                - Or enter arXiv IDs directly (e.g., "1706.03762")
+                - Or use paper URLs (e.g., "https://arxiv.org/abs/1706.03762")
+                """)
+
+                note_paper_id = gr.Textbox(label="Paper ID", placeholder="Enter paper ID or URL")
                 note_content = gr.Textbox(label="Your Notes", lines=10, placeholder="Write your notes, insights, and questions here...")
                 
                 save_note_btn = gr.Button("Save Note", variant="primary")
@@ -893,19 +967,25 @@ def create_research_assistant():
                 def save_note(user_id, paper_id, notes):
                     if not user_id or not paper_id:
                         return "Please provide user ID and paper ID."
-                    
-                    data_manager.save_notes(user_id, paper_id, notes)
-                    return "Notes saved successfully!"
-                
+
+                    # Extract paper ID from URL if needed
+                    clean_paper_id = paper_id.split("/")[-1] if "/" in paper_id else paper_id
+
+                    data_manager.save_notes(user_id, clean_paper_id, notes)
+                    return f"Notes saved successfully for paper: {clean_paper_id}"
+
                 def load_note(user_id, paper_id):
                     if not user_id or not paper_id:
                         return "Please provide user ID and paper ID."
-                    
-                    notes = data_manager.get_notes(user_id, paper_id)
+
+                    # Extract paper ID from URL if needed
+                    clean_paper_id = paper_id.split("/")[-1] if "/" in paper_id else paper_id
+
+                    notes = data_manager.get_notes(user_id, clean_paper_id)
                     if notes:
-                        return f"## Notes for Paper {paper_id}\n\n{notes}"
+                        return f"## Notes for Paper {clean_paper_id}\n\n{notes}"
                     else:
-                        return f"No notes found for paper {paper_id}."
+                        return f"No notes found for paper {clean_paper_id}."
                 
                 save_note_btn.click(save_note, inputs=[note_user_id, note_paper_id, note_content], outputs=[note_output])
                 load_note_btn.click(load_note, inputs=[note_user_id, note_paper_id], outputs=[note_output])
