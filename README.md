@@ -16,6 +16,9 @@ license: mit
 [![CI/CD Pipeline](https://github.com/nellaivijay/research-assistant/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/nellaivijay/research-assistant/actions/workflows/ci-cd.yml)
 [![Gradio](https://img.shields.io/badge/Gradio-4.0.0-orange)](https://gradio.app)
 [![Python](https://img.shields.io/badge/Python-3.10-blue)](https://python.org)
+[![Hugging Face Spaces](https://img.shields.io/badge/Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/nellaivijay/research-assistant)
+
+**🚀 Live Application:** [https://huggingface.co/spaces/nellaivijay/research-assistant](https://huggingface.co/spaces/nellaivijay/research-assistant)
 
 AI-powered research companion with custom AI model selection, multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features and optional AI-powered analysis.
 
@@ -248,12 +251,17 @@ For detailed GitHub setup instructions, see [GITHUB_SETUP.md](GITHUB_SETUP.md)
 
 ## 🚀 Getting Started
 
-1. **Find Papers**: Enter paper IDs or URLs to get recommendations
-2. **Analyze Impact**: Review citation analysis and impact scores
-3. **Build Reading List**: Add relevant papers to your personal list
-4. **Take Notes**: Add insights and annotations as you read
-5. **Track Progress**: Monitor your reading progress over time
-6. **Export**: Export citations and reading lists as needed
+### Quick Start
+1. **🚀 Try the Live App**: Visit [https://huggingface.co/spaces/nellaivijay/research-assistant](https://huggingface.co/spaces/nellaivijay/research-assistant)
+2. **📝 Find Papers**: Enter paper IDs or URLs to get recommendations
+3. **🔍 Analyze Impact**: Review citation analysis and impact scores
+4. **📖 Build Reading List**: Add relevant papers to your personal list
+5. **✏️ Take Notes**: Add insights and annotations as you read
+6. **📊 Track Progress**: Monitor your reading progress over time
+7. **📤 Export**: Export citations and reading lists as needed
+
+### Local Development
+For local development setup, see the [Installation Guide](https://github.com/nellaivijay/research-assistant/wiki/Installation-Guide) in the GitHub Wiki.
 
 ## 📝 License
 
