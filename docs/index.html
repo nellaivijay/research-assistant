@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enhanced Research Assistant - AI-powered research companion with multi-source paper recommendations, analysis, and workflow management">
+    <meta name="keywords" content="research assistant, paper recommendations, AI analysis, academic tools, literature review, citation analysis">
+    <meta name="author" content="Research Assistant Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://YOUR_USERNAME.github.io/research-assistant/">
+    <meta property="og:title" content="Enhanced Research Assistant - AI-Powered Research Companion">
+    <meta property="og:description" content="AI-powered research companion with multi-source paper recommendations, analysis, and workflow management">
+    <meta property="og:image" content="https://YOUR_USERNAME.github.io/research-assistant/assets/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://YOUR_USERNAME.github.io/research-assistant/">
+    <meta property="twitter:title" content="Enhanced Research Assistant - AI-Powered Research Companion">
+    <meta property="twitter:description" content="AI-powered research companion with multi-source paper recommendations, analysis, and workflow management">
+    <meta property="twitter:image" content="https://YOUR_USERNAME.github.io/research-assistant/assets/og-image.png">
+
+    <title>Enhanced Research Assistant - AI-Powered Research Companion</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 36px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .badges {
+            margin: 20px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .badge-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .badge-secondary {
+            background: #764ba2;
+            color: white;
+        }
+
+        .badge-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .cta-buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #764ba2;
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .section-content {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        footer {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .footer-links {
+            margin: 20px 0;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📚</div>
+            <h1>Enhanced Research Assistant</h1>
+            <p class="subtitle">AI-Powered Research Companion for Modern Academics</p>
+            
+            <div class="badges">
+                <span class="badge badge-primary">Gradio 4.0.0</span>
+                <span class="badge badge-secondary">Python 3.10</span>
+                <span class="badge badge-success">15+ AI Models</span>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="https://huggingface.co/spaces/nellaivijay/research-assistant" class="btn btn-primary">🚀 Launch App</a>
+                <a href="#features" class="btn btn-secondary">📖 Learn More</a>
+            </div>
+        </header>
+
+        <section id="features" class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3 class="feature-title">Paper Discovery</h3>
+                <p class="feature-description">Multi-source paper recommendations from Semantic Scholar, arXiv, and citation networks with intelligent relevance scoring.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI Analysis</h3>
+                <p class="feature-description">15+ AI models including GPT-4, Claude, Gemini, and open-source alternatives for intelligent paper analysis.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Citation Analysis</h3>
+                <p class="feature-description">Comprehensive citation metrics, impact scoring, and citation velocity tracking for research assessment.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3 class="feature-title">Reading Management</h3>
+                <p class="feature-description">Organize reading lists, take notes, track progress, and export to multiple formats (Markdown, JSON, BibTeX).</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🧪</div>
+                <h3 class="feature-title">A/B Testing</h3>
+                <p class="feature-description">Compare AI model performance side-by-side, track preferences, and get personalized recommendations.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Cost Optimization</h3>
+                <p class="feature-description">Automatic model selection based on budget preferences with free, balanced, and quality tiers.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">🎯 Why Enhanced Research Assistant?</h2>
+            <div class="section-content">
+                <p>Modern research requires managing overwhelming amounts of literature while extracting meaningful insights. The Enhanced Research Assistant combines AI-powered analysis with practical workflow management to help researchers:</p>
+                
+                <ul style="margin: 20px 0; padding-left: 20px;">
+                    <li><strong>Discover Relevant Papers</strong> - Multi-source recommendations with intelligent ranking</li>
+                    <li><strong>Analyze Efficiently</strong> - AI-powered summarization and insight extraction</li>
+                    <li><strong>Manage Workflow</strong> - Reading lists, notes, and progress tracking</li>
+                    <li><strong>Optimize Costs</strong> - Smart model selection and A/B testing</li>
+                    <li><strong>Collaborate Easily</strong> - Export and share in standard formats</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">📊 Platform Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">AI Models</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">Feature Tabs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Export Formats</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free to Use</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">🚀 Quick Start</h2>
+            <div class="section-content">
+                <ol style="margin: 20px 0; padding-left: 20px;">
+                    <li>Visit the <a href="https://huggingface.co/spaces/nellaivijay/research-assistant" style="color: #667eea;">live application</a></li>
+                    <li>Enter a paper ID or URL to get recommendations</li>
+                    <li>Add interesting papers to your reading list</li>
+                    <li>Configure AI models for analysis (optional)</li>
+                    <li>Use A/B testing to find your preferred models</li>
+                    <li>Export your reading list in your preferred format</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">🛠️ Technology Stack</h2>
+            <div class="section-content">
+                <p><strong>Frontend:</strong> Gradio 4.0.0, Python 3.10</p>
+                <p><strong>AI/ML:</strong> OpenAI GPT-4, Anthropic Claude, Google Gemini, Hugging Face Models</p>
+                <p><strong>Deployment:</strong> Hugging Face Spaces, GitHub Actions</p>
+                <p><strong>Documentation:</strong> GitHub Pages, GitHub Wiki</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Enhanced Research Assistant - AI-Powered Research Companion</p>
+            <div class="footer-links">
+                <a href="https://github.com/YOUR_USERNAME/research-assistant">GitHub Repository</a>
+                <a href="https://huggingface.co/spaces/nellaivijay/research-assistant">Live Application</a>
+                <a href="https://github.com/YOUR_USERNAME/research-assistant/wiki">Documentation Wiki</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px;">© 2024 Research Assistant. MIT License.</p>
+        </footer>
+    </div>
+</body>
+</html>
