@@ -916,7 +916,7 @@ def create_research_assistant():
                 
                 model_selector = gr.Dropdown(
                     choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
-                    value="rule_based (rule_based)",
+                    value=None,
                     label="Select Analysis Model"
                 )
                 
@@ -1000,7 +1000,7 @@ def create_research_assistant():
                 
                 batch_model_selector = gr.Dropdown(
                     choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
-                    value="rule_based (rule_based)",
+                    value=None,
                     label="Select Model for Batch Analysis"
                 )
                 
@@ -1134,12 +1134,12 @@ def create_research_assistant():
                 with gr.Row():
                     model_a_selector = gr.Dropdown(
                         choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
-                        value="rule_based (rule_based)",
+                        value=None,
                         label="Model A"
                     )
                     model_b_selector = gr.Dropdown(
                         choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
-                        value="gpt-4o-mini (gpt-4o-mini)",
+                        value=None,
                         label="Model B"
                     )
                 
@@ -1310,7 +1310,7 @@ def create_research_assistant():
                 )
                 
                 export_btn = gr.Button("Export Reading List", variant="primary")
-                export_output = gr.Code(language="text", label="Export Output")
+                export_output = gr.Code(language="markdown", label="Export Output")
                 
                 def export_reading_list(user_id, format_type):
                     if not user_id:
