@@ -16,39 +16,23 @@ This project is created for **educational purposes only** to demonstrate:
 ### 👤 User Documentation
 - [Getting Started Guide](Getting-Started.md) - Quick start for new users
 - [User Guide](User-Guide.md) - Comprehensive user manual
-- [Features Overview](Features-Overview.md) - Detailed feature documentation
-- [AI Models Guide](AI-Models-Guide.md) - Understanding AI model selection
-- [A/B Testing Guide](AB-Testing-Guide.md) - Using A/B testing features
 
 ### 🔧 Developer Documentation
-- [Architecture Overview](Architecture-Overview.md) - System architecture and design
-- [Development Guide](Development-Guide.md) - Setup and development workflow
-- [API Documentation](API-Documentation.md) - API reference and endpoints
-- [Database Schema](Database-Schema.md) - Data models and storage
-- [Testing Guide](Testing-Guide.md) - Testing procedures and guidelines
-
-### 🚀 Deployment Documentation
-- [Deployment Guide](Deployment-Guide.md) - Deployment instructions
-- [GitHub Actions Setup](GitHub-Actions-Setup.md) - CI/CD pipeline configuration
-- [Hugging Face Spaces Setup](Hugging-Face-Spaces-Setup.md) - Hugging Face deployment
-- [GitHub Pages Setup](GitHub-Pages-Setup.md) - Documentation site setup
-
-### 🎯 Solution Documentation
-- [Problem Statement](Problem-Statement.md) - Original problem and requirements
+- [System Architecture](System-Architecture.md) - System architecture and design
 - [Solution Design](Solution-Design.md) - Solution approach and design decisions
-- [Technical Approach](Technical-Approach.md) - Technical implementation details
-- [Performance Optimization](Performance-Optimization.md) - Optimization strategies
+- [Technical Documentation](Technical-Documentation.md) - Developer documentation and APIs
 
-### 📖 Architecture Documentation
-- [System Architecture](System-Architecture.md) - High-level system design
-- [Component Design](Component-Design.md) - Component details and interactions
-- [Data Flow](Data-Flow.md) - Data flow and processing
-- [Security Architecture](Security-Architecture.md) - Security design and implementation
+### 🚀 Setup & Deployment Documentation
+- [Installation Guide](Installation-Guide.md) - Installation instructions and setup
+- [Build Process](Build-Process.md) - Build process and dependencies
+- [Deployment Guide](Deployment-Guide.md) - Deployment instructions for various platforms
+- [GitHub Pages Setup](GitHub-Pages-Setup.md) - Documentation site setup and configuration
 
-### 🔍 SEO & Marketing
-- [SEO Guide](SEO-Guide.md) - Search engine optimization
-- [Marketing Strategy](Marketing-Strategy.md) - Promotion and outreach
-- [Community Building](Community-Building.md) - Community engagement
+### 📖 Wiki Management
+- [Wiki Pages Setup](Wiki-Pages-Setup.md) - Wiki management and best practices
+
+### 🔍 SEO & Optimization
+- [SEO Guide](SEO-Guide.md) - Search engine optimization guide
 
 ## 🎯 Quick Links
 
@@ -58,7 +42,7 @@ This project is created for **educational purposes only** to demonstrate:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](Contributing-Guide.md) for details.
+We welcome contributions! Please open an issue on GitHub to discuss changes or submit pull requests.
 
 ## 📞 Support
 
