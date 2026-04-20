@@ -905,7 +905,7 @@ def create_research_assistant():
                     if notes:
                         return f"## Notes for Paper {paper_id}\n\n{notes}"
                     else:
-                    return f"No notes found for paper {paper_id}."
+                        return f"No notes found for paper {paper_id}."
                 
                 save_note_btn.click(save_note, inputs=[note_user_id, note_paper_id, note_content], outputs=[note_output])
                 load_note_btn.click(load_note, inputs=[note_user_id, note_paper_id], outputs=[note_output])
