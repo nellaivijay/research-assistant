@@ -392,7 +392,7 @@ python -m pytest --cov=. tests/
 
 1. **Connect repository to Hugging Face**
 ```bash
-git remote add hf https://huggingface.co/spaces/YOUR_USERNAME/research-assistant
+git remote add hf https://huggingface.co/spaces/nellaivijay/research-assistant
 ```
 
 2. **Push to Hugging Face**
