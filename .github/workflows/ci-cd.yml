@@ -70,6 +70,8 @@ except Exception as e:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
     - name: Deploy to Hugging Face Spaces
       env:
@@ -79,7 +81,8 @@ except Exception as e:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
         
-        # Add Hugging Face remote
+        # Add Hugging Face remote (remove if exists)
+        git remote remove hf || true
         git remote add hf https://nellaivijay:$HF_TOKEN@huggingface.co/spaces/nellaivijay/research-assistant.git
         
         # Push to Hugging Face
