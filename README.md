@@ -9,6 +9,7 @@ python_version: "3.10"
 app_file: app.py
 pinned: false
 license: mit
+repo: https://github.com/nellaivijay/research-assistant
 ---
 
 # 📚 Enhanced Research Assistant - AI Model Selection
@@ -19,6 +20,8 @@ license: mit
 [![Hugging Face Spaces](https://img.shields.io/badge/Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/nellaivijay/research-assistant)
 
 **🚀 Live Application:** [https://huggingface.co/spaces/nellaivijay/research-assistant](https://huggingface.co/spaces/nellaivijay/research-assistant)
+
+**📦 GitHub Repository:** [https://github.com/nellaivijay/research-assistant](https://github.com/nellaivijay/research-assistant)
 
 AI-powered research companion with custom AI model selection, multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features and optional AI-powered analysis.
 
@@ -57,6 +60,17 @@ AI-powered research companion with custom AI model selection, multi-source recom
 - `productivity`
 - `knowledge-management`
 - `document-analysis`
+
+## 🔗 Project Links
+
+This project is deployed on multiple platforms for different purposes:
+
+| Platform | URL | Purpose |
+|----------|-----|---------|
+| **🚀 Hugging Face Space** | [https://huggingface.co/spaces/nellaivijay/research-assistant](https://huggingface.co/spaces/nellaivijay/research-assistant) | Live application deployment |
+| **📦 GitHub Repository** | [https://github.com/nellaivijay/research-assistant](https://github.com/nellaivijay/research-assistant) | Source code and development |
+| **📚 GitHub Pages** | [https://nellaivijay.github.io/research-assistant](https://nellaivijay.github.io/research-assistant) | Documentation website |
+| **📖 GitHub Wiki** | [https://github.com/nellaivijay/research-assistant/wiki](https://github.com/nellaivijay/research-assistant/wiki) | Comprehensive documentation |
 
 ## 🎓 Educational Purpose
 
@@ -282,6 +296,14 @@ This project uses GitHub Actions for automated CI/CD pipeline:
 - **Continuous Integration**: Tests run on every push and pull request
 - **Automated Deployment**: Auto-deploys to Hugging Face Spaces on successful tests
 - **Security Scanning**: Checks for hardcoded credentials and security issues
+- **GitHub Integration**: Hugging Face Space is linked to GitHub repository for seamless deployment
+
+### Deployment Flow
+1. Code changes pushed to GitHub repository
+2. GitHub Actions CI/CD pipeline triggers
+3. Automated testing and security scanning
+4. If tests pass, automatic deployment to Hugging Face Spaces
+5. Live application updated at https://huggingface.co/spaces/nellaivijay/research-assistant
 
 For detailed GitHub setup instructions, see [GITHUB_SETUP.md](GITHUB_SETUP.md)
 
