@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 title: Enhanced Research Assistant
 emoji: 📚
 colorFrom: blue
@@ -158,3 +159,17 @@ MIT License
 ## 🤝 Contributing
 
 This is an enhanced version inspired by librarian-bots/recommend_similar_papers, with additional research workflow features and analysis capabilities.
+=======
+title: Research Assistant
+emoji: 🚀
+colorFrom: red
+colorTo: red
+sdk: gradio
+sdk_version: 6.12.0
+app_file: app.py
+pinned: false
+license: apache-2.0
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+>>>>>>> 4c70c76a62b2d8a61461cb2f6f95cc7f47b72fa9
