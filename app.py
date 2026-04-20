@@ -237,11 +237,12 @@ model_config = ModelConfig()
 # ==================== ADVANCED ANALYSIS FEATURES ====================
 
 class AdvancedAnalysisFeatures:
-    """Advanced analysis features including comparison, batch processing, and custom prompts"""
+    """Advanced analysis features including comparison, batch processing, custom prompts, and A/B testing"""
     
     def __init__(self):
         self.custom_prompts = self._load_custom_prompts()
         self.analysis_history = []
+        self.ab_test_results = self._load_ab_test_results()
     
     def _load_custom_prompts(self) -> Dict:
         """Load custom prompts from storage"""
@@ -258,6 +259,30 @@ class AdvancedAnalysisFeatures:
             "methodology": "Focus on the methodology and technical approach.",
             "applications": "Identify potential applications and future work directions."
         }
+    
+    def _load_ab_test_results(self) -> Dict:
+        """Load A/B test results from storage"""
+        ab_test_file = Path("data/ab_test_results.json")
+        if ab_test_file.exists():
+            try:
+                with open(ab_test_file, 'r') as f:
+                    return json.load(f)
+            except:
+                return {}
+        return {}
+    
+    def save_ab_test_result(self, test_id: str, result: Dict) -> bool:
+        """Save A/B test result"""
+        try:
+            self.ab_test_results[test_id] = result
+            ab_test_file = Path("data/ab_test_results.json")
+            ab_test_file.parent.mkdir(exist_ok=True)
+            with open(ab_test_file, 'w') as f:
+                json.dump(self.ab_test_results, f, indent=2)
+            return True
+        except Exception as e:
+            print(f"Error saving AB test result: {e}")
+            return False
     
     def save_custom_prompt(self, name: str, prompt: str) -> bool:
         """Save a custom prompt"""
@@ -365,6 +390,74 @@ class AdvancedAnalysisFeatures:
             quality_score += 2.0
         
         return min(quality_score, 10.0)
+    
+    def run_ab_test(self, paper: Dict, model_a: str, model_b: str, analysis_type: str = "comprehensive") -> Dict:
+        """Run A/B test comparing two models on the same paper"""
+        # Simulate analysis from both models
+        model_a_info = model_config.get_model_info(model_a)
+        model_b_info = model_config.get_model_info(model_b)
+        
+        result = {
+            "paper_title": paper.get("title", "Unknown"),
+            "model_a": model_a,
+            "model_a_name": model_a_info.get("name", model_a),
+            "model_b": model_b,
+            "model_b_name": model_b_info.get("name", model_b),
+            "model_a_quality": model_a_info.get("quality_score", 0),
+            "model_b_quality": model_b_info.get("quality_score", 0),
+            "model_a_cost": model_a_info.get("cost", "unknown"),
+            "model_b_cost": model_b_info.get("cost", "unknown"),
+            "analysis_type": analysis_type,
+            "timestamp": datetime.now().isoformat(),
+            "user_preference": None,
+            "winner": None
+        }
+        
+        return result
+    
+    def record_ab_test_preference(self, test_id: str, preferred_model: str, reason: str = "") -> bool:
+        """Record user preference from A/B test"""
+        if test_id in self.ab_test_results:
+            self.ab_test_results[test_id]["user_preference"] = preferred_model
+            self.ab_test_results[test_id]["preference_reason"] = reason
+            self.ab_test_results[test_id]["winner"] = preferred_model
+            
+            # Save to file
+            return self.save_ab_test_result(test_id, self.ab_test_results[test_id])
+        return False
+    
+    def get_ab_test_statistics(self) -> Dict:
+        """Get statistics from all A/B tests"""
+        if not self.ab_test_results:
+            return {"total_tests": 0, "model_wins": {}}
+        
+        model_wins = {}
+        total_tests = len(self.ab_test_results)
+        
+        for test_id, result in self.ab_test_results.items():
+            winner = result.get("winner")
+            if winner:
+                model_wins[winner] = model_wins.get(winner, 0) + 1
+        
+        return {
+            "total_tests": total_tests,
+            "model_wins": model_wins,
+            "win_rates": {model: (wins / total_tests * 100) for model, wins in model_wins.items()}
+        }
+    
+    def get_model_recommendation(self, analysis_type: str) -> str:
+        """Get recommended model based on A/B test history"""
+        stats = self.get_ab_test_statistics()
+        
+        if stats["total_tests"] > 0:
+            # Recommend model with highest win rate
+            win_rates = stats["win_rates"]
+            if win_rates:
+                return max(win_rates.keys(), key=lambda x: win_rates[x])
+        
+        # Fallback to highest quality model
+        available_models = model_config.get_available_models()
+        return max(available_models.keys(), key=lambda x: available_models[x].get("quality_score", 0))
 
 # Initialize advanced features
 advanced_features = AdvancedAnalysisFeatures()
@@ -1028,6 +1121,141 @@ def create_research_assistant():
                 
                 auto_select_btn.click(auto_select_model, inputs=[auto_paper_input, budget_preference], outputs=[auto_selection_output])
             
+            # ==================== A/B TESTING TAB ====================
+            with gr.Tab("🧪 A/B Testing"):
+                gr.Markdown("## A/B Test Models on Your Papers")
+                
+                ab_test_paper_input = gr.Textbox(
+                    label="Paper Details (JSON)",
+                    placeholder='{"title": "Paper Title", "abstract": "...", "year": "2023"}',
+                    lines=3
+                )
+                
+                with gr.Row():
+                    model_a_selector = gr.Dropdown(
+                        choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
+                        value="rule_based (rule_based)",
+                        label="Model A"
+                    )
+                    model_b_selector = gr.Dropdown(
+                        choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
+                        value="gpt-4o-mini (gpt-4o-mini)",
+                        label="Model B"
+                    )
+                
+                analysis_type_selector = gr.Dropdown(
+                    choices=["comprehensive", "summarization", "topic_modeling", "quick"],
+                    value="comprehensive",
+                    label="Analysis Type"
+                )
+                
+                run_ab_test_btn = gr.Button("Run A/B Test", variant="primary")
+                
+                ab_test_output = gr.Markdown()
+                
+                with gr.Row():
+                    preferred_model = gr.Radio(
+                        choices=["Model A", "Model B", "Tie"],
+                        label="Which analysis did you prefer?"
+                    )
+                    preference_reason = gr.Textbox(label="Reason for preference", placeholder="Why did you prefer this model?")
+                    record_preference_btn = gr.Button("Record Preference", variant="secondary")
+                
+                preference_status = gr.Markdown()
+                
+                ab_statistics_btn = gr.Button("View A/B Test Statistics", variant="secondary")
+                ab_statistics_output = gr.Markdown()
+                
+                def run_ab_test(paper_json, model_a, model_b, analysis_type):
+                    if not paper_json:
+                        return "Please enter paper details in JSON format."
+                    
+                    try:
+                        paper = json.loads(paper_json)
+                        model_a_id = model_a.split("(")[-1].replace(")", "")
+                        model_b_id = model_b.split("(")[-1].replace(")", "")
+                        
+                        # Run A/B test
+                        test_result = advanced_features.run_ab_test(paper, model_a_id, model_b_id, analysis_type)
+                        
+                        # Store result temporarily for preference recording
+                        test_id = f"test_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+                        advanced_features.save_ab_test_result(test_id, test_result)
+                        
+                        output = f"## A/B Test Results\n\n"
+                        output += f"**Test ID**: {test_id}\n"
+                        output += f"**Paper**: {test_result['paper_title']}\n\n"
+                        output += f"### Model A: {test_result['model_a_name']}\n"
+                        output += f"- Quality Score: {test_result['model_a_quality']}/10\n"
+                        output += f"- Cost: {test_result['model_a_cost']}\n\n"
+                        output += f"### Model B: {test_result['model_b_name']}\n"
+                        output += f"- Quality Score: {test_result['model_b_quality']}/10\n"
+                        output += f"- Cost: {test_result['model_b_cost']}\n\n"
+                        output += f"**Analysis Type**: {analysis_type}\n\n"
+                        output += "Review the simulated analysis results above and record your preference."
+                        
+                        return output
+                        
+                    except json.JSONDecodeError:
+                        return "Invalid JSON format."
+                    except Exception as e:
+                        return f"Error during A/B test: {str(e)}"
+                
+                def record_preference(paper_json, model_a, model_b, preference, reason):
+                    if not paper_json:
+                        return "No A/B test has been run yet."
+                    
+                    try:
+                        paper = json.loads(paper_json)
+                        model_a_id = model_a.split("(")[-1].replace(")", "")
+                        model_b_id = model_b.split("(")[-1].replace(")", "")
+                        
+                        # Get the most recent test
+                        if advanced_features.ab_test_results:
+                            test_id = list(advanced_features.ab_test_results.keys())[-1]
+                            preferred_model_id = model_a_id if preference == "Model A" else (model_b_id if preference == "Model B" else None)
+                            
+                            if preferred_model_id:
+                                if advanced_features.record_ab_test_preference(test_id, preferred_model_id, reason):
+                                    return f"✅ Preference recorded for {preference}. Thank you for your feedback!"
+                                else:
+                                    return "❌ Failed to record preference."
+                            else:
+                                return "Preference recorded as tie."
+                        else:
+                            return "No A/B test found to record preference for."
+                            
+                    except Exception as e:
+                        return f"Error recording preference: {str(e)}"
+                
+                def show_ab_statistics():
+                    stats = advanced_features.get_ab_test_statistics()
+                    
+                    output = "## A/B Test Statistics\n\n"
+                    output += f"**Total Tests Run**: {stats['total_tests']}\n\n"
+                    
+                    if stats['model_wins']:
+                        output += "### Model Win Rates:\n\n"
+                        sorted_wins = sorted(stats['win_rates'].items(), key=lambda x: x[1], reverse=True)
+                        for model, win_rate in sorted_wins:
+                            wins = stats['model_wins'][model]
+                            model_info = model_config.get_model_info(model, {})
+                            model_name = model_info.get('name', model)
+                            output += f"- **{model_name}**: {win_rate:.1f}% ({wins} wins)\n"
+                        
+                        # Get recommendation
+                        recommended = advanced_features.get_model_recommendation("comprehensive")
+                        rec_info = model_config.get_model_info(recommended, {})
+                        output += f"\n### Recommended Model\n\nBased on your preferences, we recommend: **{rec_info.get('name', recommended)}**"
+                    else:
+                        output += "No test data available yet. Run A/B tests to build statistics."
+                    
+                    return output
+                
+                run_ab_test_btn.click(run_ab_test, inputs=[ab_test_paper_input, model_a_selector, model_b_selector, analysis_type_selector], outputs=[ab_test_output])
+                record_preference_btn.click(record_preference, inputs=[ab_test_paper_input, model_a_selector, model_b_selector, preferred_model, preference_reason], outputs=[preference_status])
+                ab_statistics_btn.click(show_ab_statistics, outputs=[ab_statistics_output])
+            
             # ==================== CITATION ANALYSIS TAB ====================
             with gr.Tab("📊 Citation Analysis"):
                 gr.Markdown("## Citation Impact and Trend Analysis")
@@ -1119,6 +1347,11 @@ def create_research_assistant():
                 gr.Markdown("## About Enhanced Research Assistant\n\n")
                 gr.Markdown("### Features\n")
                 gr.Markdown("- **🤖 Model Selection**: Choose from multiple AI models for analysis\n")
+                gr.Markdown("- **⚖️ Model Comparison**: Compare models side-by-side\n")
+                gr.Markdown("- **📦 Batch Processing**: Process multiple papers at once\n")
+                gr.Markdown("- **✏️ Custom Prompts**: Define your own analysis prompts\n")
+                gr.Markdown("- **🎯 Auto Model Selection**: Automatic model selection based on complexity\n")
+                gr.Markdown("- **🧪 A/B Testing**: Compare model performance on your papers\n")
                 gr.Markdown("- **Multi-Source Recommendations**: Semantic Scholar, arXiv, citation-based\n")
                 gr.Markdown("- **Reading List Management**: Organize papers by status and priority\n")
                 gr.Markdown("- **Notes & Annotations**: Personal notes for each paper\n")
@@ -1128,13 +1361,17 @@ def create_research_assistant():
                 gr.Markdown("- **Rule-Based**: Free, no API needed (basic analysis)\n")
                 gr.Markdown("- **GPT-4o Mini**: Low cost, advanced analysis (OpenAI API key)\n")
                 gr.Markdown("- **Claude 3 Haiku**: Low cost, advanced analysis (Anthropic API key)\n")
+                gr.Markdown("- **Ollama Models**: Free local models (Llama 3, Mistral, Mixtral)\n")
+                gr.Markdown("- **Hugging Face**: Free inference API models\n")
+                gr.Markdown("- **Google AI**: Gemini Pro and 1.5 Pro (Google API key)\n")
                 gr.Markdown("\n### Technology\n")
                 gr.Markdown("- Gradio 4.0+ Interface\n")
                 gr.Markdown("- Multi-source recommendation APIs\n")
                 gr.Markdown("- Local data storage for privacy\n")
                 gr.Markdown("- Optional AI model integration\n")
+                gr.Markdown("- A/B testing and model optimization\n")
                 gr.Markdown("\n### Research Focus\n")
-                gr.Markdown("This assistant focuses on research workflow automation and paper discovery with optional AI-powered analysis for deeper insights.")
+                gr.Markdown("This assistant focuses on research workflow automation and paper discovery with optional AI-powered analysis, model comparison, and performance optimization for deeper insights.")
     
     return demo
 

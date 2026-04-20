@@ -64,6 +64,7 @@ AI-powered research companion with custom AI model selection, multi-source recom
 - **Auto Model Selection**: Automatic model selection based on paper complexity
 - **Cost Optimization**: Budget-aware model selection (free/balanced/quality)
 - **Quality Scoring**: Rate analysis quality per model (1-10 scale)
+- **A/B Testing**: Compare model performance on your papers and build preferences
 
 ## 🚀 How It Works
 
@@ -143,6 +144,13 @@ Export your reading lists in multiple formats for use in other tools.
 - Budget preference settings (free/balanced/quality)
 - Smart cost optimization
 - Quality-aware recommendations
+
+### 11. 🧪 A/B Testing (NEW!)
+- Run A/B tests between any two models
+- Record your preferences and reasons
+- Build statistics on model performance
+- Get personalized model recommendations
+- Track win rates over time
 
 ## 🤖 Available AI Models
 
