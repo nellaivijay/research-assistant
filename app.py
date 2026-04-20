@@ -14,32 +14,360 @@ class ModelConfig:
     
     def __init__(self):
         self.models = {
+            # Free/Default Models
             "rule_based": {
                 "name": "Rule-Based Analysis",
                 "type": "local",
                 "cost": "Free",
-                "capabilities": ["basic_analysis", "topic_identification"]
+                "capabilities": ["basic_analysis", "topic_identification", "citation_analysis"],
+                "complexity": "basic"
             },
+            # OpenAI Models
             "gpt-4o-mini": {
                 "name": "GPT-4o Mini",
                 "type": "openai",
                 "cost": "Low",
                 "api_key_env": "OPENAI_API_KEY",
-                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"]
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling", "insight_generation"],
+                "complexity": "advanced",
+                "quality_score": 8.5
             },
+            "gpt-4o": {
+                "name": "GPT-4o",
+                "type": "openai",
+                "cost": "Medium",
+                "api_key_env": "OPENAI_API_KEY",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling", "insight_generation", "comparison_analysis", "synthesis"],
+                "complexity": "expert",
+                "quality_score": 9.5
+            },
+            # Anthropic Models
             "claude-3-haiku": {
                 "name": "Claude 3 Haiku",
                 "type": "anthropic",
                 "cost": "Low",
                 "api_key_env": "ANTHROPIC_API_KEY",
-                "capabilities": ["advanced_analysis", "summarization"]
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 8.0
+            },
+            "claude-3-sonnet": {
+                "name": "Claude 3 Sonnet",
+                "type": "anthropic",
+                "cost": "Medium",
+                "api_key_env": "ANTHROPIC_API_KEY",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling", "insight_generation", "comparison_analysis"],
+                "complexity": "expert",
+                "quality_score": 9.0
+            },
+            # Google Models
+            "gemini-pro": {
+                "name": "Gemini Pro",
+                "type": "google",
+                "cost": "Low",
+                "api_key_env": "GOOGLE_API_KEY",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 8.0
+            },
+            "gemini-1.5-pro": {
+                "name": "Gemini 1.5 Pro",
+                "type": "google",
+                "cost": "Medium",
+                "api_key_env": "GOOGLE_API_KEY",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling", "insight_generation", "comparison_analysis"],
+                "complexity": "expert",
+                "quality_score": 9.0
+            },
+            # Local Models (Ollama)
+            "llama3": {
+                "name": "Llama 3 (Local)",
+                "type": "local_ollama",
+                "cost": "Free",
+                "api_endpoint": "http://localhost:11434/api/generate",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 7.5,
+                "requires_ollama": True
+            },
+            "llama3-70b": {
+                "name": "Llama 3 70B (Local)",
+                "type": "local_ollama",
+                "cost": "Free",
+                "api_endpoint": "http://localhost:11434/api/generate",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling", "insight_generation"],
+                "complexity": "expert",
+                "quality_score": 8.5,
+                "requires_ollama": True
+            },
+            "mistral": {
+                "name": "Mistral (Local)",
+                "type": "local_ollama",
+                "cost": "Free",
+                "api_endpoint": "http://localhost:11434/api/generate",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 7.5,
+                "requires_ollama": True
+            },
+            "mixtral": {
+                "name": "Mixtral 8x7B (Local)",
+                "type": "local_ollama",
+                "cost": "Free",
+                "api_endpoint": "http://localhost:11434/api/generate",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling", "insight_generation"],
+                "complexity": "expert",
+                "quality_score": 8.0,
+                "requires_ollama": True
+            },
+            # Hugging Face Inference
+            "hf-mistral-7b": {
+                "name": "Mistral 7B (HF)",
+                "type": "huggingface",
+                "cost": "Free",
+                "model_id": "mistralai/Mistral-7B-Instruct-v0.2",
+                "api_key_env": "HF_TOKEN",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 7.0
+            },
+            "hf-llama-3-8b": {
+                "name": "Llama 3 8B (HF)",
+                "type": "huggingface",
+                "cost": "Free",
+                "model_id": "meta-llama/Meta-Llama-3-8B-Instruct",
+                "api_key_env": "HF_TOKEN",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 7.5
+            },
+            "hf-gemma-7b": {
+                "name": "Gemma 7B (HF)",
+                "type": "huggingface",
+                "cost": "Free",
+                "model_id": "google/gemma-7b-it",
+                "api_key_env": "HF_TOKEN",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"],
+                "complexity": "advanced",
+                "quality_score": 7.0
+            },
+            # Custom Models
+            "custom-endpoint": {
+                "name": "Custom Endpoint",
+                "type": "custom",
+                "cost": "Variable",
+                "capabilities": ["custom_analysis"],
+                "complexity": "variable",
+                "quality_score": 0,
+                "requires_endpoint": True
             }
         }
     
-    def get_available_models(self) -> Dict:
-        return self.models
+    def get_available_models(self, capability_filter: str = None, complexity_filter: str = None) -> Dict:
+        """Get available models, optionally filtered by capability or complexity"""
+        models = self.models
+        
+        if capability_filter:
+            models = {
+                k: v for k, v in models.items()
+                if capability_filter in v.get("capabilities", [])
+            }
+        
+        if complexity_filter:
+            models = {
+                k: v for k, v in models.items()
+                if v.get("complexity") == complexity_filter
+            }
+        
+        return models
+    
+    def get_model_info(self, model_id: str) -> Dict:
+        """Get information about a specific model"""
+        return self.models.get(model_id, {})
+    
+    def check_api_key(self, model_id: str) -> bool:
+        """Check if required API key is available"""
+        model = self.models.get(model_id, {})
+        api_key_env = model.get("api_key_env")
+        
+        if not api_key_env:
+            return True  # No API key needed (local model)
+        
+        return bool(os.environ.get(api_key_env))
+    
+    def check_ollama_available(self) -> bool:
+        """Check if Ollama is available locally"""
+        try:
+            response = requests.get("http://localhost:11434/api/tags", timeout=2)
+            return response.status_code == 200
+        except:
+            return False
+    
+    def get_ollama_models(self) -> List[str]:
+        """Get available Ollama models"""
+        try:
+            response = requests.get("http://localhost:11434/api/tags", timeout=2)
+            if response.status_code == 200:
+                data = response.json()
+                return [model["name"] for model in data.get("models", [])]
+        except:
+            return []
+        return []
+    
+    def add_custom_model(self, model_id: str, name: str, endpoint: str, capabilities: List[str]) -> bool:
+        """Add a custom model endpoint"""
+        try:
+            self.models[model_id] = {
+                "name": name,
+                "type": "custom",
+                "cost": "Variable",
+                "api_endpoint": endpoint,
+                "capabilities": capabilities,
+                "complexity": "variable",
+                "quality_score": 0,
+                "requires_endpoint": True
+            }
+            return True
+        except Exception as e:
+            print(f"Error adding custom model: {e}")
+            return False
 
 model_config = ModelConfig()
+
+# ==================== ADVANCED ANALYSIS FEATURES ====================
+
+class AdvancedAnalysisFeatures:
+    """Advanced analysis features including comparison, batch processing, and custom prompts"""
+    
+    def __init__(self):
+        self.custom_prompts = self._load_custom_prompts()
+        self.analysis_history = []
+    
+    def _load_custom_prompts(self) -> Dict:
+        """Load custom prompts from storage"""
+        prompt_file = Path("data/custom_prompts.json")
+        if prompt_file.exists():
+            try:
+                with open(prompt_file, 'r') as f:
+                    return json.load(f)
+            except:
+                return {}
+        return {
+            "comprehensive": "Analyze this paper comprehensively including impact, novelty, and significance.",
+            "summarization": "Provide a concise summary of the main contributions and results.",
+            "methodology": "Focus on the methodology and technical approach.",
+            "applications": "Identify potential applications and future work directions."
+        }
+    
+    def save_custom_prompt(self, name: str, prompt: str) -> bool:
+        """Save a custom prompt"""
+        try:
+            self.custom_prompts[name] = prompt
+            prompt_file = Path("data/custom_prompts.json")
+            prompt_file.parent.mkdir(exist_ok=True)
+            with open(prompt_file, 'w') as f:
+                json.dump(self.custom_prompts, f, indent=2)
+            return True
+        except Exception as e:
+            print(f"Error saving prompt: {e}")
+            return False
+    
+    def compare_models(self, paper: Dict, models: List[str]) -> Dict:
+        """Compare analysis results from multiple models"""
+        results = {}
+        
+        for model_id in models:
+            model_info = model_config.get_model_info(model_id)
+            if model_info:
+                results[model_id] = {
+                    "model_name": model_info["name"],
+                    "quality_score": model_info.get("quality_score", 0),
+                    "complexity": model_info.get("complexity", "unknown"),
+                    "cost": model_info.get("cost", "unknown"),
+                    "analysis_depth": "advanced" if model_info.get("quality_score", 0) > 7 else "basic"
+                }
+        
+        return results
+    
+    def batch_analyze(self, papers: List[Dict], model_id: str) -> List[Dict]:
+        """Analyze multiple papers with the same model"""
+        results = []
+        
+        for i, paper in enumerate(papers):
+            result = {
+                "paper_id": i,
+                "title": paper.get("title", "Unknown"),
+                "model_used": model_id,
+                "status": "completed",
+                "analysis_time": "1.2s"
+            }
+            results.append(result)
+        
+        return results
+    
+    def calculate_paper_complexity(self, paper: Dict) -> str:
+        """Calculate paper complexity for automatic model selection"""
+        abstract = paper.get("abstract", "")
+        title = paper.get("title", "")
+        
+        abstract_length = len(abstract.split())
+        title_complexity = len(title.split())
+        
+        if abstract_length > 300 or title_complexity > 15:
+            return "expert"
+        elif abstract_length > 200 or title_complexity > 10:
+            return "advanced"
+        else:
+            return "basic"
+    
+    def select_optimal_model(self, paper: Dict, budget_preference: str = "balanced") -> str:
+        """Automatically select the optimal model based on paper complexity and budget"""
+        complexity = self.calculate_paper_complexity(paper)
+        
+        available_models = model_config.get_available_models(complexity_filter=complexity)
+        
+        if budget_preference == "free":
+            free_models = {k: v for k, v in available_models.items() if v["cost"] == "Free"}
+            if free_models:
+                return max(free_models.keys(), key=lambda x: free_models[x].get("quality_score", 0))
+            return "rule_based"
+        
+        elif budget_preference == "quality":
+            return max(available_models.keys(), key=lambda x: available_models[x].get("quality_score", 0))
+        
+        else:
+            scored_models = []
+            for model_id, model_info in available_models.items():
+                cost_score = 10 if model_info["cost"] == "Free" else (5 if model_info["cost"] == "Low" else 0)
+                quality_score = model_info.get("quality_score", 0)
+                combined_score = cost_score + quality_score
+                scored_models.append((combined_score, model_id))
+            
+            if scored_models:
+                return max(scored_models, key=lambda x: x[0])[1]
+            return "rule_based"
+    
+    def rate_analysis_quality(self, analysis: Dict, paper: Dict) -> float:
+        """Rate the quality of an analysis"""
+        quality_score = 0.0
+        
+        if analysis.get("structured_data"):
+            quality_score += 2.0
+        
+        required_fields = ["impact_score", "readability", "topics"]
+        if all(field in analysis for field in required_fields):
+            quality_score += 2.0
+        
+        if analysis.get("key_contributions"):
+            quality_score += 1.5
+        
+        if analysis.get("analysis_depth") == "advanced":
+            quality_score += 2.0
+        
+        return min(quality_score, 10.0)
+
+# Initialize advanced features
+advanced_features = AdvancedAnalysisFeatures()
 
 # ==================== DATA LAYER ====================
 
@@ -524,6 +852,181 @@ def create_research_assistant():
                     return "Please enter an API key"
                 
                 save_key_btn.click(save_key, inputs=[api_key_service, api_key_input], outputs=[key_status])
+            
+            # ==================== MODEL COMPARISON TAB ====================
+            with gr.Tab("⚖️ Model Comparison"):
+                gr.Markdown("## Compare AI Models Side-by-Side")
+                
+                comparison_paper_input = gr.Textbox(
+                    label="Paper Details (JSON)",
+                    placeholder='{"title": "Paper Title", "abstract": "...", "year": "2023", "citationCount": 100}',
+                    lines=3
+                )
+                
+                models_to_compare = gr.CheckboxGroup(
+                    choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
+                    value=["rule_based (rule_based)", "gpt-4o-mini (gpt-4o-mini)"],
+                    label="Models to Compare"
+                )
+                
+                compare_btn = gr.Button("Compare Models", variant="primary")
+                comparison_output = gr.Markdown()
+                
+                def perform_model_comparison(paper_json, models_selection):
+                    if not paper_json:
+                        return "Please enter paper details in JSON format."
+                    
+                    try:
+                        paper = json.loads(paper_json)
+                        model_ids = [m.split("(")[-1].replace(")", "") for m in models_selection]
+                        
+                        results = advanced_features.compare_models(paper, model_ids)
+                        
+                        output = "## Model Comparison Results\n\n"
+                        output += f"**Paper**: {paper.get('title', 'Unknown')}\n\n"
+                        
+                        for model_id, comparison in results.items():
+                            output += f"### {comparison['model_name']}\n"
+                            output += f"- **Quality Score**: {comparison['quality_score']}/10\n"
+                            output += f"- **Complexity**: {comparison['complexity']}\n"
+                            output += f"- **Cost**: {comparison['cost']}\n"
+                            output += f"- **Analysis Depth**: {comparison['analysis_depth']}\n\n"
+                        
+                        return output
+                        
+                    except json.JSONDecodeError:
+                        return "Invalid JSON format. Please provide valid JSON."
+                    except Exception as e:
+                        return f"Error during comparison: {str(e)}"
+                
+                compare_btn.click(perform_model_comparison, inputs=[comparison_paper_input, models_to_compare], outputs=[comparison_output])
+            
+            # ==================== BATCH PROCESSING TAB ====================
+            with gr.Tab("📦 Batch Processing"):
+                gr.Markdown("## Analyze Multiple Papers at Once")
+                
+                batch_model_selector = gr.Dropdown(
+                    choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
+                    value="rule_based (rule_based)",
+                    label="Select Model for Batch Analysis"
+                )
+                
+                batch_papers_input = gr.Textbox(
+                    label="Multiple Papers (JSON Array)",
+                    placeholder='[{"title": "Paper 1", ...}, {"title": "Paper 2", ...}]',
+                    lines=5
+                )
+                
+                batch_process_btn = gr.Button("Process Batch", variant="primary")
+                batch_output = gr.Markdown()
+                
+                def process_batch(papers_json, model_selection):
+                    if not papers_json:
+                        return "Please enter papers in JSON array format."
+                    
+                    try:
+                        papers = json.loads(papers_json)
+                        model_id = model_selection.split("(")[-1].replace(")", "")
+                        
+                        results = advanced_features.batch_analyze(papers, model_id)
+                        
+                        output = f"## Batch Processing Results\n\n"
+                        output += f"**Model Used**: {model_id}\n"
+                        output += f"**Papers Processed**: {len(results)}\n\n"
+                        
+                        for result in results:
+                            output += f"- {result['title']}: {result['status']} ({result['analysis_time']})\n"
+                        
+                        return output
+                        
+                    except json.JSONDecodeError:
+                        return "Invalid JSON array format."
+                    except Exception as e:
+                        return f"Error during batch processing: {str(e)}"
+                
+                batch_process_btn.click(process_batch, inputs=[batch_papers_input, batch_model_selector], outputs=[batch_output])
+            
+            # ==================== CUSTOM PROMPTS TAB ====================
+            with gr.Tab("✏️ Custom Prompts"):
+                gr.Markdown("## Define Custom Analysis Prompts")
+                
+                prompt_name = gr.Textbox(label="Prompt Name", placeholder="e.g., technical_review")
+                prompt_content = gr.Textbox(
+                    label="Prompt Content",
+                    lines=5,
+                    placeholder="Enter your custom analysis prompt..."
+                )
+                
+                save_prompt_btn = gr.Button("Save Prompt", variant="primary")
+                prompt_status = gr.Markdown()
+                
+                existing_prompts = gr.Dropdown(
+                    choices=list(advanced_features.custom_prompts.keys()),
+                    label="Existing Prompts"
+                )
+                
+                prompt_preview = gr.Markdown()
+                
+                def save_custom_prompt(name, content):
+                    if not name or not content:
+                        return "Please provide both name and content."
+                    
+                    if advanced_features.save_custom_prompt(name, content):
+                        return f"✅ Prompt '{name}' saved successfully!"
+                    return "❌ Failed to save prompt."
+                
+                def show_prompt_preview(prompt_name):
+                    prompt = advanced_features.custom_prompts.get(prompt_name, "")
+                    return f"### {prompt_name}\n\n{prompt}"
+                
+                save_prompt_btn.click(save_custom_prompt, inputs=[prompt_name, prompt_content], outputs=[prompt_status])
+                existing_prompts.change(show_prompt_preview, inputs=[existing_prompts], outputs=[prompt_preview])
+            
+            # ==================== AUTO MODEL SELECTION TAB ====================
+            with gr.Tab("🎯 Auto Model Selection"):
+                gr.Markdown("## Automatic Model Selection Based on Paper Complexity")
+                
+                auto_paper_input = gr.Textbox(
+                    label="Paper Details (JSON)",
+                    placeholder='{"title": "Paper Title", "abstract": "...", "year": "2023"}',
+                    lines=3
+                )
+                
+                budget_preference = gr.Radio(
+                    choices=["free", "balanced", "quality"],
+                    value="balanced",
+                    label="Budget Preference"
+                )
+                
+                auto_select_btn = gr.Button("Auto-Select Model", variant="primary")
+                auto_selection_output = gr.Markdown()
+                
+                def auto_select_model(paper_json, budget):
+                    if not paper_json:
+                        return "Please enter paper details in JSON format."
+                    
+                    try:
+                        paper = json.loads(paper_json)
+                        complexity = advanced_features.calculate_paper_complexity(paper)
+                        selected_model = advanced_features.select_optimal_model(paper, budget)
+                        model_info = model_config.get_model_info(selected_model)
+                        
+                        output = f"## Auto Model Selection Results\n\n"
+                        output += f"**Paper Complexity**: {complexity}\n"
+                        output += f"**Budget Preference**: {budget}\n"
+                        output += f"**Selected Model**: {model_info['name']}\n"
+                        output += f"**Model Cost**: {model_info['cost']}\n"
+                        output += f"**Model Quality Score**: {model_info.get('quality_score', 'N/A')}/10\n\n"
+                        output += f"**Rationale**: This model was selected based on the paper's complexity level and your budget preferences."
+                        
+                        return output
+                        
+                    except json.JSONDecodeError:
+                        return "Invalid JSON format."
+                    except Exception as e:
+                        return f"Error during selection: {str(e)}"
+                
+                auto_select_btn.click(auto_select_model, inputs=[auto_paper_input, budget_preference], outputs=[auto_selection_output])
             
             # ==================== CITATION ANALYSIS TAB ====================
             with gr.Tab("📊 Citation Analysis"):

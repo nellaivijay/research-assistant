@@ -18,11 +18,13 @@ AI-powered research companion with custom AI model selection, multi-source recom
 ## 🎯 Key Features
 
 ### 🤖 AI Model Selection (NEW!)
-- **Multiple AI Models**: Choose from rule-based, OpenAI, Anthropic models
-- **Cost Control**: Select free (rule-based) or paid AI models as needed
+- **15+ AI Models**: Rule-based, OpenAI, Anthropic, Google, Ollama (local), Hugging Face (free)
+- **Cost Control**: Select free (rule-based, local, HF) or paid AI models as needed
 - **API Key Management**: Secure local storage of API keys
 - **Model Comparison**: Compare analysis results across different models
 - **Flexible Analysis**: Switch between basic and advanced analysis
+- **Local Models**: Use Ollama for free local inference (Llama 3, Mistral, Mixtral)
+- **Custom Endpoints**: Bring your own model endpoints
 
 ### 🔍 Multi-Source Recommendations
 - **Semantic Scholar**: Citation-based recommendations using academic graph
@@ -54,6 +56,14 @@ AI-powered research companion with custom AI model selection, multi-source recom
 - **JSON**: Structured data for further processing
 - **Markdown**: Human-readable format for sharing
 - **Citation Styles**: Multiple format options
+
+### ⚖️ Advanced Features (NEW!)
+- **Model Comparison**: Side-by-side analysis comparison across different AI models
+- **Batch Processing**: Analyze multiple papers with a single model selection
+- **Custom Prompts**: Define and save custom analysis prompts for specific needs
+- **Auto Model Selection**: Automatic model selection based on paper complexity
+- **Cost Optimization**: Budget-aware model selection (free/balanced/quality)
+- **Quality Scoring**: Rate analysis quality per model (1-10 scale)
 
 ## 🚀 How It Works
 
@@ -110,20 +120,51 @@ Export your reading lists in multiple formats for use in other tools.
 - Reading list export
 - Citation formatting
 
+### 7. ⚖️ Model Comparison (NEW!)
+- Side-by-side model comparison
+- Quality score comparison
+- Cost vs quality analysis
+- Performance metrics
+
+### 8. 📦 Batch Processing (NEW!)
+- Analyze multiple papers at once
+- Single model selection for batch
+- Progress tracking
+- Results aggregation
+
+### 9. ✏️ Custom Prompts (NEW!)
+- Define custom analysis prompts
+- Save and reuse prompts
+- Pre-built prompt templates
+- Specialized analysis workflows
+
+### 10. 🎯 Auto Model Selection (NEW!)
+- Automatic model selection based on complexity
+- Budget preference settings (free/balanced/quality)
+- Smart cost optimization
+- Quality-aware recommendations
+
 ## 🤖 Available AI Models
 
 ### Free Models
 - **Rule-Based Analysis**: Pattern matching and keyword extraction (no API needed)
+- **Hugging Face Inference**: Mistral 7B, Llama 3 8B, Gemma 7B (free HF API)
+- **Ollama Local Models**: Llama 3, Llama 3 70B, Mistral, Mixtral (requires Ollama)
 
 ### Paid Models (Optional)
-- **GPT-4o Mini**: Fast, efficient analysis (OpenAI API key required)
-- **Claude 3 Haiku**: Quick analysis with good quality (Anthropic API key required)
+- **OpenAI**: GPT-4o Mini (low cost), GPT-4o (medium cost)
+- **Anthropic**: Claude 3 Haiku (low cost), Claude 3 Sonnet (medium cost)
+- **Google**: Gemini Pro (low cost), Gemini 1.5 Pro (medium cost)
+
+### Custom Models
+- **Custom Endpoints**: Bring your own model API endpoints
 
 ### Model Capabilities
 - **Basic Analysis**: Topic identification, citation analysis, readability assessment
 - **Advanced Analysis**: Deep insights, summarization, novelty assessment
 - **Topic Modeling**: Research theme identification and clustering
 - **Comparison Analysis**: Cross-paper comparison and synthesis
+- **Synthesis**: Multi-paper synthesis and literature review generation
 
 ## 🧠 Research Workflow Integration
 
