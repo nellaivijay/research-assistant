@@ -1333,10 +1333,10 @@ def create_research_assistant():
                         bibtex = ""
                         for i, paper in enumerate(papers):
                             key = f"paper{i}_{paper['year']}"
-                            bibtex += f"@article{{{key}},\n"
-                            bibtex += f"  title = {{{paper['title']}}},\n"
-                            bibtex += f"  year = {{{paper['year']}}},\n"
-                            bibtex += f"  url = {{{paper['url']}}}\n"
+                            bibtex += f"@article{{{{{key}}}},\n"
+                            bibtex += f"  title = {{{{{paper['title']}}}}},\n"
+                            bibtex += f"  year = {{{{{paper['year']}}}}},\n"
+                            bibtex += f"  url = {{{{{paper['url']}}}}}\n"
                             bibtex += "}\n\n"
                         return bibtex
                 
