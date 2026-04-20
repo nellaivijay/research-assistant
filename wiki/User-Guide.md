@@ -407,10 +407,10 @@ The system automatically selects models based on:
 
 ### Getting Help
 
-- Check the [GitHub Wiki](https://github.com/YOUR_USERNAME/research-assistant/wiki) for more documentation
+- Check the [GitHub Wiki](https://github.com/nellaivijay/research-assistant/wiki) for more documentation
 - Open an issue on GitHub for bugs
 - Contact maintainers for support
 
 ---
 
-**For more information, visit the [GitHub Repository](https://github.com/YOUR_USERNAME/research-assistant)**
+**For more information, visit the [GitHub Repository](https://github.com/nellaivijay/research-assistant)**

@@ -13,11 +13,22 @@ license: mit
 
 # 📚 Enhanced Research Assistant - AI Model Selection
 
-[![CI/CD Pipeline](https://github.com/YOUR_USERNAME/research-assistant/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/YOUR_USERNAME/research-assistant/actions/workflows/ci-cd.yml)
+[![CI/CD Pipeline](https://github.com/nellaivijay/research-assistant/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/nellaivijay/research-assistant/actions/workflows/ci-cd.yml)
 [![Gradio](https://img.shields.io/badge/Gradio-4.0.0-orange)](https://gradio.app)
 [![Python](https://img.shields.io/badge/Python-3.10-blue)](https://python.org)
 
 AI-powered research companion with custom AI model selection, multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features and optional AI-powered analysis.
+
+## 🎓 Educational Purpose
+
+This project is created for **educational purposes only** to demonstrate:
+- AI model integration and comparison
+- Research workflow automation
+- Modern web application development
+- CI/CD pipeline implementation
+- Documentation and SEO best practices
+
+The system is designed to help researchers and students learn about AI-powered research tools and modern software development practices.
 
 ## 🎯 Key Features
 

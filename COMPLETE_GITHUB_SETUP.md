@@ -36,10 +36,8 @@ This project now includes a complete GitHub ecosystem:
 
 ```bash
 cd /home/ramdov/projects/research-assistant
-git remote add github https://github.com/YOUR_USERNAME/research-assistant.git
+git remote add github https://github.com/nellaivijay/research-assistant.git
 ```
-
-Replace `YOUR_USERNAME` with your actual GitHub username.
 
 ### Step 3: Configure GitHub Secrets
 
@@ -76,7 +74,7 @@ git push github main
 
 ### Step 5: Enable GitHub Pages
 
-1. **Go to Repository Settings**: https://github.com/YOUR_USERNAME/research-assistant/settings
+1. **Go to Repository Settings**: https://github.com/nellaivijay/research-assistant/settings
 2. **Navigate to Pages**: Left sidebar → "Pages"
 3. **Source**:
    - Build and deployment: **GitHub Actions**
@@ -85,14 +83,14 @@ git push github main
 
 ### Step 6: Enable GitHub Wiki
 
-1. **Go to Repository**: https://github.com/YOUR_USERNAME/research-assistant
+1. **Go to Repository**: https://github.com/nellaivijay/research-assistant
 2. **Click "Wiki" tab** in top navigation
 3. **Wiki will be automatically populated** from our `wiki/` directory
 4. **You can edit wiki pages directly** on GitHub if needed
 
 ### Step 7: Verify GitHub Actions
 
-1. **Go to Actions tab**: https://github.com/YOUR_USERNAME/research-assistant/actions
+1. **Go to Actions tab**: https://github.com/nellaivijay/research-assistant/actions
 2. **You should see two workflows**:
    - CI/CD Pipeline
    - Deploy Documentation to GitHub Pages
@@ -101,7 +99,7 @@ git push github main
 ### Step 8: Verify GitHub Pages
 
 1. **Wait for documentation workflow** to complete (usually 1-2 minutes)
-2. **Visit your GitHub Pages site**: https://YOUR_USERNAME.github.io/research-assistant/
+2. **Visit your GitHub Pages site**: https://nellaivijay.github.io/research-assistant/
 3. **You should see the professional documentation site**
 
 ## 📚 Documentation Structure
@@ -208,19 +206,13 @@ git push github main
 
 ### Update GitHub Pages URL
 
-Replace `YOUR_USERNAME` in docs/index.html with your actual username:
-
-```html
-<meta property="og:url" content="https://YOUR_USERNAME.github.io/research-assistant/">
-```
+The GitHub Pages site is already configured with the correct URL:
+- https://nellaivijay.github.io/research-assistant/
 
 ### Update Wiki Links
 
-Replace `YOUR_USERNAME` in wiki pages:
-
-```markdown
-[GitHub Repository](https://github.com/YOUR_USERNAME/research-assistant)
-```
+All wiki links are already configured with the correct repository:
+- https://github.com/nellaivijay/research-assistant
 
 ### Customize GitHub Actions
 

@@ -16,10 +16,8 @@ This guide will help you set up GitHub integration with automated CI/CD pipeline
 
 ```bash
 cd /home/ramdov/projects/research-assistant
-git remote add github https://github.com/YOUR_USERNAME/research-assistant.git
+git remote add github https://github.com/nellaivijay/research-assistant.git
 ```
-
-Replace `YOUR_USERNAME` with your actual GitHub username.
 
 ### 3. Configure GitHub Secrets
 

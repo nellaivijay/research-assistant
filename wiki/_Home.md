@@ -2,6 +2,15 @@
 
 Welcome to the Research Assistant documentation hub. This wiki contains comprehensive documentation for users, developers, and contributors.
 
+## 🎓 Educational Purpose
+
+This project is created for **educational purposes only** to demonstrate:
+- AI model integration and comparison
+- Research workflow automation
+- Modern web application development
+- CI/CD pipeline implementation
+- Documentation and SEO best practices
+
 ## 📚 Documentation Categories
 
 ### 👤 User Documentation
@@ -44,8 +53,8 @@ Welcome to the Research Assistant documentation hub. This wiki contains comprehe
 ## 🎯 Quick Links
 
 - **Live Application**: [https://huggingface.co/spaces/nellaivijay/research-assistant](https://huggingface.co/spaces/nellaivijay/research-assistant)
-- **GitHub Repository**: [https://github.com/YOUR_USERNAME/research-assistant](https://github.com/YOUR_USERNAME/research-assistant)
-- **Documentation Site**: [https://YOUR_USERNAME.github.io/research-assistant](https://YOUR_USERNAME.github.io/research-assistant)
+- **GitHub Repository**: [https://github.com/nellaivijay/research-assistant](https://github.com/nellaivijay/research-assistant)
+- **Documentation Site**: [https://nellaivijay.github.io/research-assistant](https://nellaivijay.github.io/research-assistant)
 
 ## 🤝 Contributing
 

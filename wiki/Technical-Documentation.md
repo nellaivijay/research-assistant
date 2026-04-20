@@ -25,7 +25,7 @@ Complete technical documentation for developers working on the Enhanced Research
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/research-assistant.git
+git clone https://github.com/nellaivijay/research-assistant.git
 cd research-assistant
 ```
 
@@ -473,4 +473,4 @@ Types:
 
 ---
 
-**For more information, visit the [GitHub Repository](https://github.com/YOUR_USERNAME/research-assistant)**
+**For more information, visit the [GitHub Repository](https://github.com/nellaivijay/research-assistant)**
