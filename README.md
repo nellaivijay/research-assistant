@@ -75,6 +75,10 @@ This project is deployed on multiple platforms for different purposes:
 | **📚 GitHub Pages** | [https://nellaivijay.github.io/research-assistant](https://nellaivijay.github.io/research-assistant) | Documentation website |
 | **📖 GitHub Wiki** | [https://github.com/nellaivijay/research-assistant/wiki](https://github.com/nellaivijay/research-assistant/wiki) | Comprehensive documentation |
 
+## 🧠 Related Projects
+
+- **AGI/ASI Papers Analysis**: [Local Development](../agi-asi-papers-analysis/) - Analyze AI papers for AGI/ASI relevance from AI-Papers-of-the-Week
+
 ## 🎓 Educational Purpose
 
 This project is created for **educational purposes only** to demonstrate:
