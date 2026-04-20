@@ -22,6 +22,42 @@ license: mit
 
 AI-powered research companion with custom AI model selection, multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features and optional AI-powered analysis.
 
+## 🏷️ Repository Topics
+
+**Primary Topics:**
+- `research-assistant`
+- `paper-recommendation`
+- `ai-models`
+- `machine-learning`
+- `natural-language-processing`
+- `academic-research`
+- `literature-review`
+- `citation-analysis`
+
+**Technology Topics:**
+- `gradio`
+- `python`
+- `hugging-face`
+- `openai`
+- `anthropic`
+- `google-gemini`
+- `llm`
+- `generative-ai`
+
+**Development Topics:**
+- `ci-cd`
+- `github-actions`
+- `web-application`
+- `api-integration`
+- `workflow-automation`
+
+**Use Case Topics:**
+- `education`
+- `research-tools`
+- `productivity`
+- `knowledge-management`
+- `document-analysis`
+
 ## 🎓 Educational Purpose
 
 This project is created for **educational purposes only** to demonstrate:

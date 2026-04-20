@@ -1,0 +1,52 @@
+# GitHub Repository Topics
+
+These topics can be added to the GitHub repository settings to improve discoverability.
+
+## Recommended Topics (comma-separated)
+
+research-assistant, paper-recommendation, ai-models, machine-learning, natural-language-processing, academic-research, literature-review, citation-analysis, gradio, python, hugging-face, openai, anthropic, google-gemini, llm, generative-ai, ci-cd, github-actions, web-application, api-integration, workflow-automation, education, research-tools, productivity, knowledge-management, document-analysis
+
+## How to Add Topics to GitHub Repository
+
+1. Go to your repository on GitHub
+2. Click on "Settings" tab
+3. Scroll down to "Topics" section
+4. Click "Change topics"
+5. Add the topics listed above (comma-separated)
+6. Click "Save changes"
+
+## Topic Categories
+
+### Primary Topics
+- research-assistant
+- paper-recommendation
+- ai-models
+- machine-learning
+- natural-language-processing
+- academic-research
+- literature-review
+- citation-analysis
+
+### Technology Topics
+- gradio
+- python
+- hugging-face
+- openai
+- anthropic
+- google-gemini
+- llm
+- generative-ai
+
+### Development Topics
+- ci-cd
+- github-actions
+- web-application
+- api-integration
+- workflow-automation
+
+### Use Case Topics
+- education
+- research-tools
+- productivity
+- knowledge-management
+- document-analysis
