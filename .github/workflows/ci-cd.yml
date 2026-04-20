@@ -37,17 +37,25 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
-    - name: Install Hugging Face CLI
+    - name: Configure git
       run: |
-        pip install huggingface_hub
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
     
     - name: Deploy to Hugging Face Spaces
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
-        # Deploy using Hugging Face CLI
-        huggingface-cli login --token $HF_TOKEN
-        huggingface-cli upload nellaivijay/research-assistant . --repo-type space --commit-message "Deploy from GitHub Actions"
+        # Remove existing remote if present
+        git remote remove hf || true
         
-        echo "✅ Deployed to Hugging Face Spaces using CLI"
+        # Add Hugging Face remote with token
+        git remote add hf https://nellaivijay:$HF_TOKEN@huggingface.co/spaces/nellaivijay/research-assistant.git
+        
+        # Push to Hugging Face
+        git push hf main:main --force
+        
+        echo "✅ Deployed to Hugging Face Spaces"
