@@ -11,11 +11,18 @@ pinned: false
 license: mit
 ---
 
-# 📚 Enhanced Research Assistant
+# 📚 Enhanced Research Assistant - AI Model Selection
 
-AI-powered research companion with multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features.
+AI-powered research companion with custom AI model selection, multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features and optional AI-powered analysis.
 
 ## 🎯 Key Features
+
+### 🤖 AI Model Selection (NEW!)
+- **Multiple AI Models**: Choose from rule-based, OpenAI, Anthropic models
+- **Cost Control**: Select free (rule-based) or paid AI models as needed
+- **API Key Management**: Secure local storage of API keys
+- **Model Comparison**: Compare analysis results across different models
+- **Flexible Analysis**: Switch between basic and advanced analysis
 
 ### 🔍 Multi-Source Recommendations
 - **Semantic Scholar**: Citation-based recommendations using academic graph
@@ -67,35 +74,56 @@ Export your reading lists in multiple formats for use in other tools.
 
 ## 🎨 Dashboard Tabs
 
-### 1. Paper Recommendations
+### 1. 🤖 Model Selection (NEW!)
+- Choose from multiple AI analysis models
+- Configure API keys for different services
+- View model capabilities and costs
+- Switch between free and paid analysis
+
+### 2. 🔍 Paper Recommendations
 - Multi-source paper discovery
 - Smart ranking and filtering
 - Abstract previews
 - One-click access to full papers
 
-### 2. Reading List
+### 3. 📖 Reading List
 - Personal paper organization
 - Status-based categorization
 - Progress tracking
 - Bulk operations
 
-### 3. Notes & Annotations
+### 4. 📝 Notes & Annotations
 - Per-paper note-taking
 - Persistent storage
 - Quick search and retrieval
 - Research journal building
 
-### 4. Citation Analysis
+### 5. 📊 Citation Analysis
 - Impact metrics
 - Trend analysis
 - Topic identification
 - Contribution extraction
 
-### 5. Export
+### 6. 📤 Export
 - Multiple format support
 - Bibliography generation
 - Reading list export
 - Citation formatting
+
+## 🤖 Available AI Models
+
+### Free Models
+- **Rule-Based Analysis**: Pattern matching and keyword extraction (no API needed)
+
+### Paid Models (Optional)
+- **GPT-4o Mini**: Fast, efficient analysis (OpenAI API key required)
+- **Claude 3 Haiku**: Quick analysis with good quality (Anthropic API key required)
+
+### Model Capabilities
+- **Basic Analysis**: Topic identification, citation analysis, readability assessment
+- **Advanced Analysis**: Deep insights, summarization, novelty assessment
+- **Topic Modeling**: Research theme identification and clustering
+- **Comparison Analysis**: Cross-paper comparison and synthesis
 
 ## 🧠 Research Workflow Integration
 
@@ -111,8 +139,9 @@ This assistant is designed to integrate into your research workflow:
 
 - **Frontend**: Gradio 4.0+
 - **Recommendations**: Semantic Scholar API, arXiv API
+- **AI Models**: Optional OpenAI, Anthropic integration
 - **Data Storage**: Local JSON files (privacy-focused)
-- **Analysis**: Custom citation and impact algorithms
+- **Analysis**: Custom citation and impact algorithms + optional AI analysis
 - **Deployment**: Hugging Face Spaces
 
 ## 🔒 Privacy & Data

@@ -5,6 +5,41 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Optional
 import re
+import os
+
+# ==================== MODEL CONFIGURATION ====================
+
+class ModelConfig:
+    """Manage AI model configurations"""
+    
+    def __init__(self):
+        self.models = {
+            "rule_based": {
+                "name": "Rule-Based Analysis",
+                "type": "local",
+                "cost": "Free",
+                "capabilities": ["basic_analysis", "topic_identification"]
+            },
+            "gpt-4o-mini": {
+                "name": "GPT-4o Mini",
+                "type": "openai",
+                "cost": "Low",
+                "api_key_env": "OPENAI_API_KEY",
+                "capabilities": ["advanced_analysis", "summarization", "topic_modeling"]
+            },
+            "claude-3-haiku": {
+                "name": "Claude 3 Haiku",
+                "type": "anthropic",
+                "cost": "Low",
+                "api_key_env": "ANTHROPIC_API_KEY",
+                "capabilities": ["advanced_analysis", "summarization"]
+            }
+        }
+    
+    def get_available_models(self) -> Dict:
+        return self.models
+
+model_config = ModelConfig()
 
 # ==================== DATA LAYER ====================
 
@@ -286,8 +321,8 @@ def create_research_assistant():
     with gr.Blocks(title="Research Assistant - Enhanced") as demo:
         
         # Header
-        gr.Markdown("# 📚 Enhanced Research Assistant")
-        gr.Markdown("AI-powered research companion with multi-source recommendations, analysis, and workflow management")
+        gr.Markdown("# 📚 Enhanced Research Assistant - AI Model Selection")
+        gr.Markdown("Advanced research companion with custom AI model selection, multi-source recommendations, and workflow management")
         
         with gr.Tabs():
             # ==================== PAPER RECOMMENDATIONS TAB ====================
@@ -454,6 +489,42 @@ def create_research_assistant():
                 save_note_btn.click(save_note, inputs=[note_user_id, note_paper_id, note_content], outputs=[note_output])
                 load_note_btn.click(load_note, inputs=[note_user_id, note_paper_id], outputs=[note_output])
             
+            # ==================== MODEL SELECTION TAB ====================
+            with gr.Tab("🤖 Model Selection"):
+                gr.Markdown("## Select Analysis Model")
+                
+                model_selector = gr.Dropdown(
+                    choices=[f"{info['name']} ({model_id})" for model_id, info in model_config.get_available_models().items()],
+                    value="rule_based (rule_based)",
+                    label="Select Analysis Model"
+                )
+                
+                model_info = gr.Markdown()
+                
+                def show_model_info(model_selection):
+                    model_id = model_selection.split("(")[-1].replace(")", "")
+                    info = model_config.models.get(model_id, {})
+                    if info:
+                        return f"### {info['name']}\n- **Cost**: {info['cost']}\n- **Capabilities**: {', '.join(info['capabilities'])}"
+                    return "Model not found"
+                
+                model_selector.change(show_model_info, inputs=[model_selector], outputs=[model_info])
+                
+                gr.Markdown("### API Key Configuration")
+                api_key_service = gr.Dropdown(choices=["OpenAI", "Anthropic"], label="Service")
+                api_key_input = gr.Textbox(label="API Key", type="password")
+                save_key_btn = gr.Button("Save API Key")
+                key_status = gr.Markdown()
+                
+                def save_key(service, key):
+                    if key:
+                        env_var = f"{service.upper()}_API_KEY"
+                        os.environ[env_var] = key
+                        return f"✅ API key saved for {service}"
+                    return "Please enter an API key"
+                
+                save_key_btn.click(save_key, inputs=[api_key_service, api_key_input], outputs=[key_status])
+            
             # ==================== CITATION ANALYSIS TAB ====================
             with gr.Tab("📊 Citation Analysis"):
                 gr.Markdown("## Citation Impact and Trend Analysis")
@@ -544,18 +615,23 @@ def create_research_assistant():
             with gr.Tab("ℹ️ About"):
                 gr.Markdown("## About Enhanced Research Assistant\n\n")
                 gr.Markdown("### Features\n")
+                gr.Markdown("- **🤖 Model Selection**: Choose from multiple AI models for analysis\n")
                 gr.Markdown("- **Multi-Source Recommendations**: Semantic Scholar, arXiv, citation-based\n")
                 gr.Markdown("- **Reading List Management**: Organize papers by status and priority\n")
                 gr.Markdown("- **Notes & Annotations**: Personal notes for each paper\n")
                 gr.Markdown("- **Citation Analysis**: Impact scoring and trend analysis\n")
                 gr.Markdown("- **Export Options**: BibTeX, JSON, Markdown formats\n")
+                gr.Markdown("\n### AI Models Available\n")
+                gr.Markdown("- **Rule-Based**: Free, no API needed (basic analysis)\n")
+                gr.Markdown("- **GPT-4o Mini**: Low cost, advanced analysis (OpenAI API key)\n")
+                gr.Markdown("- **Claude 3 Haiku**: Low cost, advanced analysis (Anthropic API key)\n")
                 gr.Markdown("\n### Technology\n")
                 gr.Markdown("- Gradio 4.0+ Interface\n")
                 gr.Markdown("- Multi-source recommendation APIs\n")
                 gr.Markdown("- Local data storage for privacy\n")
-                gr.Markdown("- Paper analysis algorithms\n")
+                gr.Markdown("- Optional AI model integration\n")
                 gr.Markdown("\n### Research Focus\n")
-                gr.Markdown("This assistant focuses on research workflow automation and paper discovery rather than full-text analysis, making it efficient for literature review and research planning.")
+                gr.Markdown("This assistant focuses on research workflow automation and paper discovery with optional AI-powered analysis for deeper insights.")
     
     return demo
 
