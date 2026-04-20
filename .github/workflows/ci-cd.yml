@@ -1,0 +1,88 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run syntax check
+      run: |
+        python -m py_compile app.py
+        echo "✅ Syntax check passed"
+    
+    - name: Run basic tests
+      run: |
+        python -c "
+import sys
+sys.path.insert(0, '.')
+try:
+    # Test basic imports
+    import gradio
+    import json
+    import requests
+    print('✅ All imports successful')
+    
+    # Test model configuration
+    from app import ModelConfig
+    model_config = ModelConfig()
+    models = model_config.get_available_models()
+    print(f'✅ Model configuration loaded: {len(models)} models available')
+    
+    print('✅ All basic tests passed')
+except Exception as e:
+    print(f'❌ Test failed: {e}')
+    sys.exit(1)
+"
+    
+    - name: Security check
+      run: |
+        echo "Checking for potential security issues..."
+        if grep -r "api_key\|secret\|token" app.py | grep -v "api_key_env\|API_KEY\|get_api_key"; then
+          echo "⚠️ Warning: Found hardcoded credentials"
+        else
+          echo "✅ No hardcoded credentials found"
+        fi
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to Hugging Face Spaces
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      run: |
+        # Configure git for Hugging Face
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        
+        # Add Hugging Face remote
+        git remote add hf https://nellaivijay:$HF_TOKEN@huggingface.co/spaces/nellaivijay/research-assistant.git
+        
+        # Push to Hugging Face
+        git push hf main:main --force
+        
+        echo "✅ Deployed to Hugging Face Spaces"

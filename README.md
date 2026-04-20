@@ -13,6 +13,10 @@ license: mit
 
 # 📚 Enhanced Research Assistant - AI Model Selection
 
+[![CI/CD Pipeline](https://github.com/YOUR_USERNAME/research-assistant/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/YOUR_USERNAME/research-assistant/actions/workflows/ci-cd.yml)
+[![Gradio](https://img.shields.io/badge/Gradio-4.0.0-orange)](https://gradio.app)
+[![Python](https://img.shields.io/badge/Python-3.10-blue)](https://python.org)
+
 AI-powered research companion with custom AI model selection, multi-source recommendations, analysis, and workflow management. An enhanced version of paper recommendation systems with comprehensive research workflow features and optional AI-powered analysis.
 
 ## 🎯 Key Features
@@ -219,6 +223,17 @@ This assistant is designed to integrate into your research workflow:
 - **Industry Researchers**: Staying current with developments
 - **Data Scientists**: ML/AI paper tracking and analysis
 - **Research Groups**: Shared reading lists and collaboration
+
+## 🛠️ Development & CI/CD
+
+This project uses GitHub Actions for automated CI/CD pipeline:
+
+- **Automated Testing**: Syntax checks, dependency validation, basic tests
+- **Continuous Integration**: Tests run on every push and pull request
+- **Automated Deployment**: Auto-deploys to Hugging Face Spaces on successful tests
+- **Security Scanning**: Checks for hardcoded credentials and security issues
+
+For detailed GitHub setup instructions, see [GITHUB_SETUP.md](GITHUB_SETUP.md)
 
 ## 🚀 Getting Started
 
