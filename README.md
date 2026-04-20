@@ -60,6 +60,9 @@ AI-powered research companion with custom AI model selection, multi-source recom
 - `productivity`
 - `knowledge-management`
 - `document-analysis`
+- `kaggle`
+- `data-science`
+- `machine-learning-competitions`
 
 ## 🔗 Project Links
 
@@ -287,6 +290,47 @@ This assistant is designed to integrate into your research workflow:
 - **Industry Researchers**: Staying current with developments
 - **Data Scientists**: ML/AI paper tracking and analysis
 - **Research Groups**: Shared reading lists and collaboration
+- **Kaggle Competitors**: Research state-of-the-art methods for competitions, find relevant papers for specific problem domains, understand cutting-edge techniques, organize research for competition solutions
+
+## 🏆 How This Helps Kaggle Competitors
+
+### **Research State-of-the-Art Methods**
+- **Competition Research**: Find cutting-edge papers relevant to specific competition domains (computer vision, NLP, tabular data, etc.)
+- **Method Discovery**: Discover latest techniques and architectures used in top-performing solutions
+- **Benchmark Papers**: Find papers with state-of-the-art results on datasets similar to competition data
+
+### **Domain-Specific Paper Discovery**
+- **Computer Vision**: Find latest CV papers for image classification, object detection, segmentation
+- **NLP**: Discover transformer models, BERT variants, GPT applications for text competitions
+- **Tabular Data**: Research gradient boosting, neural networks for structured data
+- **Time Series**: Find papers on forecasting, anomaly detection, sequence modeling
+- **Recommendation Systems**: Discover collaborative filtering, content-based methods
+
+### **Solution Development Workflow**
+- **Literature Review**: Build comprehensive reading lists for each competition
+- **Method Selection**: Compare different approaches using AI-powered analysis
+- **Implementation Planning**: Organize papers by implementation priority and complexity
+- **Citation Tracking**: Follow citation chains to find foundational and related work
+
+### **Competitive Advantage**
+- **Stay Current**: Get recommendations for recent papers in your competition domain
+- **Deep Understanding**: Use AI analysis to extract key contributions and methodologies
+- **Efficient Research**: Save time with automated paper discovery and analysis
+- **Knowledge Management**: Build personal research library across multiple competitions
+
+### **Kaggle-Specific Use Cases**
+1. **Before Competition**: Research the problem domain and state-of-the-art methods
+2. **During Competition**: quickly find relevant papers for specific approaches
+3. **Post-Competition**: Organize learnings and papers for future reference
+4. **Cross-Competition**: Build knowledge base across different competition types
+5. **Team Collaboration**: Share reading lists and notes with team members
+
+### **Integration with Kaggle Workflow**
+- **Dataset Analysis**: Find papers related to specific types of datasets
+- **Metric Understanding**: Research papers that define competition metrics
+- **Ensemble Methods**: Discover papers on model ensemble techniques
+- **Feature Engineering**: Find papers on feature extraction and engineering
+- **Hyperparameter Optimization**: Research optimization techniques and papers
 
 ## 🛠️ Development & CI/CD
 

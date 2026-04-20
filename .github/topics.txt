@@ -4,7 +4,7 @@ These topics can be added to the GitHub repository settings to improve discovera
 
 ## Recommended Topics (comma-separated)
 
-research-assistant, paper-recommendation, ai-models, machine-learning, natural-language-processing, academic-research, literature-review, citation-analysis, gradio, python, hugging-face, openai, anthropic, google-gemini, llm, generative-ai, ci-cd, github-actions, web-application, api-integration, workflow-automation, education, research-tools, productivity, knowledge-management, document-analysis
+research-assistant, paper-recommendation, ai-models, machine-learning, natural-language-processing, academic-research, literature-review, citation-analysis, gradio, python, hugging-face, openai, anthropic, google-gemini, llm, generative-ai, ci-cd, github-actions, web-application, api-integration, workflow-automation, education, research-tools, productivity, knowledge-management, document-analysis, kaggle, data-science, machine-learning-competitions
 
 ## How to Add Topics to GitHub Repository
 
@@ -50,3 +50,6 @@ research-assistant, paper-recommendation, ai-models, machine-learning, natural-l
 - productivity
 - knowledge-management
 - document-analysis
+- kaggle
+- data-science
+- machine-learning-competitions
